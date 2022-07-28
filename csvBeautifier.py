@@ -2,8 +2,12 @@ import os
 import csv
 from Npp import editor, notepad
 
+#Si el directorio no existe, se creara
+rutaArchTemp = "C:/test2"
+if not os.path.exists(rutaArchTemp):
+    os.makedirs(rutaArchTemp)
+
 #Conteo de archivos temporales
-rutaArchTemp = "C:/test"
 file_count = sum(len(files) for _, _, files in os.walk(rutaArchTemp))
 if file_count > 2:
     notepad.messageBox("Su directorio de archivos temporales esta demasiado llena.\nSe recomienda limpiarla antes de continuar." + "\n\nRuta de archivos actual: " + rutaArchTemp, "Advertencia", MESSAGEBOXFLAGS.ICONEXCLAMATION)
@@ -32,7 +36,7 @@ for fila in list(csv_reader):
     columnas = []
 
 #Abrir CSV ordenado en Notepad++
-pathCSVord = rutaArchTemp+"/"+notepad.getCurrentFilename().split("\\")[-1]+"_ordenado"
+pathCSVord = rutaArchTemp+"/"+notepad.getCurrentFilename().split("\\")[-1]+"_ordenado.csv"
 with open(pathCSVord, 'w') as tempCsv:
     tempCsv = csv.writer(tempCsv, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
     tempCsv.writerows(list(filas))
